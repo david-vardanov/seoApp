@@ -5,7 +5,6 @@ class SEOAnalysis {
     description,
     keywords,
     viewport,
-    robots,
     canonical,
     ogTitle,
     ogDescription,
@@ -30,7 +29,6 @@ class SEOAnalysis {
     this.description = description;
     this.keywords = keywords;
     this.viewport = viewport;
-    this.robots = robots;
     this.canonical = canonical;
     this.ogTitle = ogTitle;
     this.ogDescription = ogDescription;

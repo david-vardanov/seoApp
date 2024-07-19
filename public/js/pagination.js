@@ -21,12 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <a href="${link.href}" target="_blank">${link.href}</a> (${
             link.isInternal ? "Internal" : "External"
           })
-            </span>
-            <button class="btn btn-secondary btn-sm analyze-link" data-url="${
-              link.href
-            }">
-              <i class="bi bi-search"></i> Analyze
-            </button>`;
+            </span>`;
           linksList.appendChild(listItem);
         });
 
@@ -39,22 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             link.parentElement.classList.remove("active");
           }
-        });
-
-        const analyzeButtons = document.querySelectorAll(".analyze-link");
-        analyzeButtons.forEach((button) => {
-          button.addEventListener("click", (event) => {
-            const url = button.getAttribute("data-url");
-            const formInput = document.querySelector(
-              "#reanalyzeForm input[name='url']"
-            );
-            if (formInput) {
-              formInput.value = url;
-              form.submit();
-            } else {
-              console.error("Form input element not found");
-            }
-          });
         });
       })
       .catch((error) => {

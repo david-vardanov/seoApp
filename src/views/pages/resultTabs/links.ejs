@@ -11,12 +11,6 @@
           <a href="<%= link.href %>" target="_blank"><%= link.href %></a> (<%=
           link.isInternal ? 'Internal' : 'External' %>)
         </span>
-        <button
-          class="btn btn-secondary btn-sm analyze-link"
-          data-url="<%= link.href %>"
-        >
-          <i class="bi bi-search"></i> Analyze
-        </button>
       </li>
       <% }) %> <% } else { %>
       <li class="list-group-item">No links found.</li>

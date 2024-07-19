@@ -3,86 +3,46 @@
     <h5>Performance Metrics:</h5>
   </div>
 
-  <div class="col-md-4 text-center">
-    <div
-      class="circle"
-      data-value="<%= analysis.lightHouseMetrics.performanceScore %>"
-    >
-      <span><%= analysis.lightHouseMetrics.performanceScore %></span>
-    </div>
-    <p>Performance Score</p>
+  <div class="col-md-6">
+    <p>
+      <strong>Performance Score:</strong> <%=
+      analysis.lightHouseMetrics.performanceScore %>
+    </p>
   </div>
-  <div class="col-md-4 text-center">
-    <div
-      class="circle"
-      data-value="<%= analysis.lightHouseMetrics.firstContentfulPaint %>"
-    >
-      <span
-        ><%= (analysis.lightHouseMetrics.firstContentfulPaint / 1000).toFixed(2)
-        %>s</span
-      >
-    </div>
-    <p>First Contentful Paint</p>
+  <div class="col-md-6">
+    <p>
+      <strong>First Contentful Paint:</strong> <%=
+      (analysis.lightHouseMetrics.firstContentfulPaint / 1000).toFixed(2) %> s
+    </p>
   </div>
-  <div class="col-md-4 text-center">
-    <div
-      class="circle"
-      data-value="<%= analysis.lightHouseMetrics.largestContentfulPaint %>"
-    >
-      <span
-        ><%= (analysis.lightHouseMetrics.largestContentfulPaint /
-        1000).toFixed(2) %>s</span
-      >
-    </div>
-    <p>Largest Contentful Paint</p>
+  <div class="col-md-6">
+    <p>
+      <strong>Largest Contentful Paint:</strong> <%=
+      (analysis.lightHouseMetrics.largestContentfulPaint / 1000).toFixed(2) %> s
+    </p>
   </div>
-
-  <div class="col-md-4 text-center">
-    <div
-      class="circle"
-      data-value="<%= analysis.lightHouseMetrics.speedIndex %>"
-    >
-      <span
-        ><%= (analysis.lightHouseMetrics.speedIndex / 1000).toFixed(2) %>s</span
-      >
-    </div>
-    <p>Speed Index</p>
+  <div class="col-md-6">
+    <p>
+      <strong>Speed Index:</strong> <%= (analysis.lightHouseMetrics.speedIndex /
+      1000).toFixed(2) %> s
+    </p>
   </div>
-  <div class="col-md-4 text-center">
-    <div
-      class="circle"
-      data-value="<%= analysis.lightHouseMetrics.timeToInteractive %>"
-    >
-      <span
-        ><%= (analysis.lightHouseMetrics.timeToInteractive / 1000).toFixed(2)
-        %>s</span
-      >
-    </div>
-    <p>Time to Interactive</p>
+  <div class="col-md-6">
+    <p>
+      <strong>Time to Interactive:</strong> <%=
+      (analysis.lightHouseMetrics.timeToInteractive / 1000).toFixed(2) %> s
+    </p>
   </div>
-  <div class="col-md-4 text-center">
-    <div
-      class="circle"
-      data-value="<%= analysis.lightHouseMetrics.totalBlockingTime %>"
-    >
-      <span
-        ><%= (analysis.lightHouseMetrics.totalBlockingTime / 1000).toFixed(2)
-        %>s</span
-      >
-    </div>
-    <p>Total Blocking Time</p>
+  <div class="col-md-6">
+    <p>
+      <strong>Total Blocking Time:</strong> <%=
+      (analysis.lightHouseMetrics.totalBlockingTime / 1000).toFixed(2) %> s
+    </p>
   </div>
-
-  <div class="col-md-4 text-center">
-    <div
-      class="circle"
-      data-value="<%= analysis.lightHouseMetrics.cumulativeLayoutShift %>"
-    >
-      <span
-        ><%= analysis.lightHouseMetrics.cumulativeLayoutShift.toFixed(2)
-        %></span
-      >
-    </div>
-    <p>Cumulative Layout Shift</p>
+  <div class="col-md-6">
+    <p>
+      <strong>Cumulative Layout Shift:</strong> <%=
+      analysis.lightHouseMetrics.cumulativeLayoutShift.toFixed(2) %>
+    </p>
   </div>
 </div>

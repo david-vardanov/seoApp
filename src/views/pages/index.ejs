@@ -1,16 +1,25 @@
 <% layout('layout') %>
 
 <div class="container my-5">
-  <h1 class="text-center mb-4">SEO Analysis</h1>
-  <form id="analyzeForm" method="GET" action="/seo/analyze">
-    <div class="mb-3">
-      <label for="url" class="form-label">Enter URL:</label>
-      <input type="url" class="form-control" id="url" name="url" required />
+  <h1 class="text-center mb-4">SEO Analyzer</h1>
+  <form id="analyzeForm" action="/seo/analyze" method="get">
+    <div class="input-group input-group-lg mb-3">
+      <input
+        type="text"
+        name="url"
+        class="form-control"
+        placeholder="Enter URL"
+        aria-label="Enter URL"
+        aria-describedby="analyzeButton"
+        value="<%= url || '' %>"
+        required
+      />
+      <button class="btn btn-primary" type="submit" id="analyzeButton">
+        Analyze
+      </button>
     </div>
-    <button type="submit" class="btn btn-primary">Analyze</button>
   </form>
-
-  <div class="progress mt-5" style="display: none">
+  <div class="progress" style="display: none">
     <div
       class="progress-bar"
       role="progressbar"
@@ -22,6 +31,7 @@
       0%
     </div>
   </div>
-  <div id="status" class="mt-3"></div>
+  <p id="status"><%= error || '' %></p>
 </div>
+
 <script src="/js/progress.js"></script>
