@@ -1,0 +1,37 @@
+<div class="row mt-3">
+  <div class="col-12">
+    <h5>Headers:</h5>
+    <% if (analysis.headers && analysis.headers.length > 0) { %> <%
+    analysis.headers.forEach(header => { %>
+    <p><strong><%= header.tag %>:</strong> <%= header.content %></p>
+    <% }) %> <% } else { %>
+    <p>No headers found.</p>
+    <% } %>
+
+    <h5>First Paragraph:</h5>
+    <% if (analysis.firstParagraph) { %>
+    <p><%= analysis.firstParagraph %></p>
+    <% } else { %>
+    <p>No paragraphs found.</p>
+    <% } %>
+
+    <h5>Strong Texts:</h5>
+    <% if (analysis.strongs && analysis.strongs.length > 0) { %> <%
+    analysis.strongs.forEach(strong => { %>
+    <p><strong><%= strong %></strong></p>
+    <% }) %> <% } else { %>
+    <p>No strong texts found.</p>
+    <% } %>
+
+    <h5>Bold Texts:</h5>
+    <% if (analysis.bolds && analysis.bolds.length > 0) { %> <%
+    analysis.bolds.forEach(bold => { %>
+    <p><b><%= bold %></b></p>
+    <% }) %> <% } else { %>
+    <p>No bold texts found.</p>
+    <% } %>
+
+    <h5>Content Word Count:</h5>
+    <p>Total paragraphs: <%= analysis.paragraphsCount %></p>
+  </div>
+</div>

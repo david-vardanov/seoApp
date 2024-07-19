@@ -1,0 +1,22 @@
+{
+  "name": "seotool",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chrome-launcher": "^1.1.2",
+    "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
+    "express": "^4.19.2",
+    "lighthouse": "^12.1.0",
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^22.13.1"
+  }
+}

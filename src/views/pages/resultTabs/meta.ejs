@@ -1,0 +1,67 @@
+<div class="row mt-3">
+  <div class="col-md-4">
+    <h5>Title:</h5>
+    <p class="card-text"><%= analysis.title %></p>
+    <p class="text-muted">Length: <%= analysis.titleLength %> characters</p>
+    <% if (!analysis.titleValid) { %>
+    <p class="text-danger">
+      Recommendation: Title length should be between 50-60 characters.
+    </p>
+    <% } %>
+  </div>
+  <div class="col-md-4">
+    <h5>Description:</h5>
+    <p class="card-text"><%= analysis.description %></p>
+    <p class="text-muted">
+      Length: <%= analysis.descriptionLength %> characters
+    </p>
+    <% if (!analysis.descriptionValid) { %>
+    <p class="text-danger">
+      Recommendation: Description length should be between 150-160 characters.
+    </p>
+    <% } %>
+  </div>
+  <div class="col-md-4">
+    <h5>Keywords:</h5>
+    <p class="card-text"><%= analysis.keywords %></p>
+    <% if (analysis.keywords) { %>
+    <p class="text-danger">
+      Recommendation: Remove meta keywords as they are no longer relevant for
+      SEO.
+    </p>
+    <% } %>
+  </div>
+  <div class="col-md-4">
+    <h5>Viewport:</h5>
+    <p class="card-text"><%= analysis.viewport %></p>
+    <% if (!analysis.viewport) { %>
+    <p class="text-danger">
+      Recommendation: Add a viewport tag for responsive design.
+    </p>
+    <% } %>
+  </div>
+  <div class="col-md-4">
+    <h5>Robots:</h5>
+    <p class="card-text"><%= analysis.robots %></p>
+  </div>
+  <div class="col-md-4">
+    <h5>Canonical:</h5>
+    <p class="card-text"><%= analysis.canonical %></p>
+  </div>
+  <div class="col-md-4">
+    <h5>Open Graph Title:</h5>
+    <p class="card-text"><%= analysis.ogTitle %></p>
+  </div>
+  <div class="col-md-4">
+    <h5>Open Graph Description:</h5>
+    <p class="card-text"><%= analysis.ogDescription %></p>
+  </div>
+  <div class="col-md-4">
+    <h5>Open Graph Image:</h5>
+    <p class="card-text">
+      <a href="<%= analysis.ogImage %>" target="_blank"
+        ><%= analysis.ogImage %></a
+      >
+    </p>
+  </div>
+</div>
