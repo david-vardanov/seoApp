@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
+  const form = document.getElementById("analyzeForm");
+
   const progressContainer = document.querySelector(".progress");
   const progressBar = document.querySelector(".progress-bar");
   const statusText = document.querySelector("#status");
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data.progress === 100) {
           source.close();
           if (data.status.startsWith("Error:")) {
+            // Redirect with error message
             window.location.href = `/?error=${encodeURIComponent(data.status)}`;
           } else {
             window.location.href = `/seo/result?url=${encodeURIComponent(url)}`;
@@ -43,8 +45,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  if (form) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      let url = form.url.value;
+
+      if (!url.startsWith("http")) {
+        url = `http://${url}`;
+      }
+
+      startAnalysis(url);
+    });
+  }
+
+  const params = new URLSearchParams(window.location.search);
   if (params.has("url")) {
     const url = params.get("url");
     startAnalysis(url);
+  }
+
+  if (params.has("error")) {
+    const error = params.get("error");
+    statusText.innerText = error;
+    statusText.style.color = "red"; // Optional: Make the error text red
   }
 });

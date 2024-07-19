@@ -12,9 +12,11 @@
   "description": "",
   "dependencies": {
     "chrome-launcher": "^1.1.2",
+    "connect-flash": "^0.1.1",
     "ejs": "^3.1.10",
     "ejs-mate": "^4.0.0",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "lighthouse": "^12.1.0",
     "pdf-lib": "^1.17.1",
     "puppeteer": "^22.13.1"

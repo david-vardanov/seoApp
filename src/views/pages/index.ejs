@@ -5,7 +5,7 @@
   <form id="analyzeForm" action="/seo/analyze" method="get">
     <div class="input-group input-group-lg mb-3">
       <input
-        type="text"
+        type="url"
         name="url"
         class="form-control"
         placeholder="Enter URL"
@@ -31,7 +31,7 @@
       0%
     </div>
   </div>
-  <p id="status"><%= error || '' %></p>
+  <p id="status"></p>
 </div>
 
 <script src="/js/progress.js"></script>

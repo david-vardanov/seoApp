@@ -1,6 +1,5 @@
 const puppeteer = require("puppeteer");
 const SEOAnalysis = require("../models/SEOAnalysis");
-const { puppeteerOptions } = require("../config/config");
 const {
   storeAnalysis,
   getAnalysis,
@@ -14,7 +13,8 @@ async function analyze(req, res) {
   const { url } = req.query;
 
   if (!url) {
-    return res.status(400).send("URL is required");
+    req.flash("error", "URL is required");
+    return res.redirect("/");
   }
 
   const formattedUrl = url.startsWith("http") ? url : `http://${url}`;
@@ -28,7 +28,7 @@ async function analyze(req, res) {
     res.write(`data: ${JSON.stringify({ progress, status })}\n\n`);
   };
 
-  const browser = await puppeteer.launch(puppeteerOptions);
+  const browser = await puppeteer.launch({ headless: true });
   let page;
 
   try {
@@ -87,18 +87,21 @@ async function analyze(req, res) {
     );
 
     storeAnalysis(formattedUrl, analysis);
-
+    req.flash("success", "SEO analysis complete.");
     res.end();
   } catch (error) {
     console.error("Error performing SEO analysis:", error);
 
-    // Handle specific error
+    let errorMessage = "Error performing SEO analysis";
     if (error.message.includes("net::ERR_NAME_NOT_RESOLVED")) {
-      sendProgress(100, "Error: The domain name could not be resolved.");
-    } else {
-      sendProgress(100, "Error performing SEO analysis");
+      errorMessage = "Error: The domain name could not be resolved.";
+    } else if (error.message.includes("net::ERR_ADDRESS_UNREACHABLE")) {
+      errorMessage = "Error: The address is unreachable.";
     }
+    req.flash("error", errorMessage);
 
+    // Notify client of error
+    sendProgress(100, errorMessage);
     res.end();
   } finally {
     if (browser) {
@@ -110,10 +113,12 @@ async function analyze(req, res) {
 function getAnalysisByUrl(req, res) {
   const { url, page = 0 } = req.query;
   if (!url) {
+    req.flash("error", "No URL provided");
     return res.redirect("/");
   }
   const analysis = getAnalysis(url);
   if (!analysis) {
+    req.flash("error", "No analysis found for the given URL");
     return res.redirect("/");
   }
 
