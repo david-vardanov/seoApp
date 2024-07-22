@@ -16,4 +16,6 @@ router.get("/links", (req, res) => {
   res.json(paginatedLinks);
 });
 
+router.get("/report", seoController.downloadReport);
+
 module.exports = router;

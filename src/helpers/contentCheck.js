@@ -19,4 +19,30 @@ async function extractLinks(page) {
   });
 }
 
-module.exports = { extractHeaders, extractLinks };
+async function extractStrongAndBoldTexts(page) {
+  const strongs = await page.evaluate(() => {
+    return Array.from(document.querySelectorAll("strong")).map(
+      (el) => el.innerText
+    );
+  });
+
+  const bolds = await page.evaluate(() => {
+    return Array.from(document.querySelectorAll("b")).map((el) => el.innerText);
+  });
+
+  return { strongs, bolds };
+}
+
+async function extractFirstParagraph(page) {
+  return await page.evaluate(() => {
+    const p = document.querySelector("p");
+    return p ? p.innerText : null;
+  });
+}
+
+module.exports = {
+  extractHeaders,
+  extractLinks,
+  extractStrongAndBoldTexts,
+  extractFirstParagraph,
+};

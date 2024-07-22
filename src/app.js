@@ -15,13 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "secretKey",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
 app.use(flash());
 
 app.use((req, res, next) => {

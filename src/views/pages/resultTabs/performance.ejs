@@ -1,45 +1,45 @@
 <div class="row mt-3">
-  <div class="col-12">
+  <div class="col-12 my-3">
     <h5>Performance Metrics:</h5>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-4">
     <p>
       <strong>Performance Score:</strong> <%=
       analysis.lightHouseMetrics.performanceScore %>
     </p>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <p>
       <strong>First Contentful Paint:</strong> <%=
       (analysis.lightHouseMetrics.firstContentfulPaint / 1000).toFixed(2) %> s
     </p>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <p>
       <strong>Largest Contentful Paint:</strong> <%=
       (analysis.lightHouseMetrics.largestContentfulPaint / 1000).toFixed(2) %> s
     </p>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <p>
       <strong>Speed Index:</strong> <%= (analysis.lightHouseMetrics.speedIndex /
       1000).toFixed(2) %> s
     </p>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <p>
       <strong>Time to Interactive:</strong> <%=
       (analysis.lightHouseMetrics.timeToInteractive / 1000).toFixed(2) %> s
     </p>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <p>
       <strong>Total Blocking Time:</strong> <%=
       (analysis.lightHouseMetrics.totalBlockingTime / 1000).toFixed(2) %> s
     </p>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
     <p>
       <strong>Cumulative Layout Shift:</strong> <%=
       analysis.lightHouseMetrics.cumulativeLayoutShift.toFixed(2) %>

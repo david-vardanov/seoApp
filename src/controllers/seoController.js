@@ -6,8 +6,14 @@ const {
   getPaginatedLinks,
 } = require("../storage/analysisResults");
 const { extractMetaTags } = require("../helpers/metaCheck");
-const { extractHeaders, extractLinks } = require("../helpers/contentCheck");
+const {
+  extractHeaders,
+  extractLinks,
+  extractStrongAndBoldTexts,
+  extractFirstParagraph,
+} = require("../helpers/contentCheck");
 const { getLighthouseMetrics } = require("../helpers/lighthouseCheck");
+const { generatePDF } = require("../helpers/pdfGenerator");
 
 async function analyze(req, res) {
   const { url } = req.query;
@@ -45,11 +51,25 @@ async function analyze(req, res) {
     sendProgress(50, "Extracting headers...");
     const headers = await extractHeaders(page);
 
-    sendProgress(70, "Extracting links...");
+    sendProgress(60, "Extracting links...");
     const links = await extractLinks(page);
 
+    sendProgress(70, "Extracting strong and bold texts...");
+    const { strongs, bolds } = await extractStrongAndBoldTexts(page);
+
+    sendProgress(80, "Extracting first paragraph...");
+    const firstParagraph = await extractFirstParagraph(page);
+
     sendProgress(90, "Running Lighthouse analysis...");
-    const lighthouseMetrics = await getLighthouseMetrics(formattedUrl);
+    let lighthouseMetrics;
+    try {
+      lighthouseMetrics = await getLighthouseMetrics(formattedUrl);
+    } catch (error) {
+      console.error("Lighthouse analysis failed:", error);
+      sendProgress(100, "Error during Lighthouse analysis.");
+      res.end();
+      return;
+    }
 
     sendProgress(100, "Analysis complete.");
 
@@ -77,13 +97,22 @@ async function analyze(req, res) {
             window.performance.timing.navigationStart
         ),
       },
-      metaTags.title.length,
-      metaTags.description.length,
+      metaTags.title ? metaTags.title.length : 0,
+      metaTags.description ? metaTags.description.length : 0,
       headers,
       links.filter((link) => link.isInternal).length,
       links.filter((link) => !link.isInternal).length,
-      metaTags.title.length >= 50 && metaTags.title.length <= 60,
-      metaTags.description.length >= 150 && metaTags.description.length <= 160
+      metaTags.title
+        ? metaTags.title.length >= 50 && metaTags.title.length <= 60
+        : false,
+      metaTags.description
+        ? metaTags.description.length >= 150 &&
+          metaTags.description.length <= 160
+        : false,
+      firstParagraph,
+      headers.length, // Assuming headers are paragraph count
+      strongs,
+      bolds
     );
 
     storeAnalysis(formattedUrl, analysis);
@@ -130,4 +159,15 @@ function getAnalysisByUrl(req, res) {
   });
 }
 
-module.exports = { analyze, getAnalysisByUrl };
+async function downloadReport(req, res) {
+  const { url } = req.query;
+  const analysis = getAnalysis(url);
+
+  if (!analysis) {
+    return res.status(404).send("No analysis found for the given URL");
+  }
+
+  generatePDF(analysis, res);
+}
+
+module.exports = { analyze, getAnalysisByUrl, downloadReport };
