@@ -5,7 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const progressBar = document.querySelector(".progress-bar");
   const statusText = document.querySelector("#status");
 
+  let isAnalysisStarted = false; // Flag to prevent double initialization
+
   const startAnalysis = (url) => {
+    if (isAnalysisStarted) return; // Prevent double calls
+    isAnalysisStarted = true;
+
+    console.log("startAnalysis called with URL:", url); // Add logging here
+
     if (progressContainer && progressBar && statusText) {
       progressContainer.style.display = "block";
       progressBar.style.width = "0%";
@@ -16,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `/seo/analyze?url=${encodeURIComponent(url)}`
       );
 
-      source.addEventListener("message", function (event) {
+      source.addEventListener("message", (event) => {
         const data = JSON.parse(event.data);
         progressBar.style.width = `${data.progress}%`;
         progressBar.innerText = `${data.progress}%`;
@@ -25,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data.progress === 100) {
           source.close();
           if (data.status.startsWith("Error:")) {
-            // Redirect with error message
             window.location.href = `/?error=${encodeURIComponent(data.status)}`;
           } else {
             window.location.href = `/seo/result?url=${encodeURIComponent(url)}`;
@@ -33,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      source.addEventListener("error", function () {
+      source.addEventListener("error", () => {
         source.close();
         statusText.innerText =
           "An error occurred during analysis. Please try again later.";
@@ -46,11 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (form) {
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", (event) => {
       event.preventDefault();
-      let url = form.url.value;
+      let url = form.url.value.trim();
+      console.log("Form submitted with URL:", url); // Add logging here
 
-      if (!url.startsWith("http")) {
+      if (!url.startsWith("http://") && !url.startsWith("https://")) {
         url = `http://${url}`;
       }
 
@@ -67,6 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (params.has("error")) {
     const error = params.get("error");
     statusText.innerText = error;
-    statusText.style.color = "red"; // Optional: Make the error text red
+    statusText.style.color = "red";
   }
 });

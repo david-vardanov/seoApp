@@ -16,6 +16,7 @@ const { getLighthouseMetrics } = require("../helpers/lighthouseCheck");
 const { generatePDF } = require("../helpers/pdfGenerator");
 
 async function analyze(req, res) {
+  console.log("Analyze function called - Start", new Date().toISOString()); // Add timestamp
   const { url } = req.query;
 
   if (!url) {
@@ -64,6 +65,7 @@ async function analyze(req, res) {
     let lighthouseMetrics;
     try {
       lighthouseMetrics = await getLighthouseMetrics(formattedUrl);
+      console.log("Lighthouse analysis complete."); // Add this line for logging
     } catch (error) {
       console.error("Lighthouse analysis failed:", error);
       sendProgress(100, "Error during Lighthouse analysis.");
